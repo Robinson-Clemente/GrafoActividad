@@ -1,5 +1,6 @@
 package Vista;
 
+
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.MouseInfo;
@@ -10,16 +11,18 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 
+
 public class VistaPrincipal extends javax.swing.JFrame {
 
     ArrayList<JButton> botones = new ArrayList<>();
+    Point location;
 
     public VistaPrincipal() {
-        initComponents();
-
+        initComponents();      
         setSize(886, 650);
         setLocationRelativeTo(null);
         setResizable(false);
+        location = this.getLocation();
     }
 
     private void agregarBoton(double x, double y) {
@@ -60,6 +63,19 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                formMouseMoved(evt);
+            }
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                formMouseDragged(evt);
+            }
+        });
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentMoved(java.awt.event.ComponentEvent evt) {
+                formComponentMoved(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -167,7 +183,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
         boolean estado = false;
         Point punto = MouseInfo.getPointerInfo().getLocation();
         //Equilibrador en X ES 272 y en Y 172 tamaño del panel 720X560
-        int x =(int)punto.getX()-272;
+        int x =(int)punto.getX()-272;       
         int y=(int)punto.getY()-172;
         if (botones.isEmpty()) {
             agregarBoton(punto.getX(), punto.getY());
@@ -176,7 +192,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
             for (JButton boton : botones) {
                 int valorx = (x-boton.getX());
                 int valory = (y-boton.getY()); 
-                //RANGOS DE 0 Y 40 TANTO EN X y EN Y PARA CADA BOTON
+  
                 if ((valorx < 70 & (valorx *-1 < 30)) &(valory < 70 & (valory *-1 < 30))) {
                     estado = true;
                     break;
@@ -220,6 +236,21 @@ public class VistaPrincipal extends javax.swing.JFrame {
            JOptionPane.showMessageDialog(null,"Espacio prohibido");
     }//GEN-LAST:event_jLabel3MousePressed
 
+    private void formComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentMoved
+           if(this.getLocation()!=location){               
+               this.setLocation(location);
+           }
+    }//GEN-LAST:event_formComponentMoved
+
+    private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
+      
+    }//GEN-LAST:event_formMouseDragged
+
+    private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
+    
+     
+    }//GEN-LAST:event_formMouseMoved
+  
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
