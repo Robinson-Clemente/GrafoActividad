@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
+
 public class VistaPrincipal extends javax.swing.JFrame {
 
     ArrayList<JButton> botones = new ArrayList<>();
@@ -22,7 +23,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }
 
     private void agregarBoton(double x, double y) {
-
+        
         String name = JOptionPane.showInputDialog("Digite el nombre de la ubicación");
         JButton boton = new JButton();
         boton.setName(name);
@@ -49,6 +50,13 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
 
         };
+        label1 = new javax.swing.JLabel();
+        label2 = new javax.swing.JLabel();
+        label3 = new javax.swing.JLabel();
+        label4 = new javax.swing.JLabel();
+        label5 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -61,15 +69,87 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        label1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                label1MousePressed(evt);
+            }
+        });
+
+        label2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                label2MousePressed(evt);
+            }
+        });
+
+        label3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                label3MousePressed(evt);
+            }
+        });
+
+        label4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                label4MousePressed(evt);
+            }
+        });
+
+        label5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                label5MousePressed(evt);
+            }
+        });
+
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel2MousePressed(evt);
+            }
+        });
+
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel3MousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
         panel1Layout.setHorizontalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 716, Short.MAX_VALUE)
+            .addGroup(panel1Layout.createSequentialGroup()
+                .addGap(86, 86, 86)
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(label4, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                    .addComponent(label1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(64, 64, 64)
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel1Layout.createSequentialGroup()
+                        .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(78, 78, 78)
+                        .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
+                        .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(61, 61, 61)
+                        .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))))
         );
         panel1Layout.setVerticalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 556, Short.MAX_VALUE)
+            .addGroup(panel1Layout.createSequentialGroup()
+                .addGap(71, 71, 71)
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(61, 61, 61)
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panel1Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(60, 60, 60)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         getContentPane().add(panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 720, 560));
@@ -83,6 +163,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void panel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel1MousePressed
+                  
         boolean estado = false;
         Point punto = MouseInfo.getPointerInfo().getLocation();
         //Equilibrador en X ES 272 y en Y 172 tamaño del panel 720X560
@@ -91,12 +172,12 @@ public class VistaPrincipal extends javax.swing.JFrame {
         if (botones.isEmpty()) {
             agregarBoton(punto.getX(), punto.getY());
         } else {
-            //continuar
+            
             for (JButton boton : botones) {
                 int valorx = (x-boton.getX());
                 int valory = (y-boton.getY()); 
                 //RANGOS DE 0 Y 40 TANTO EN X y EN Y PARA CADA BOTON
-                if (valorx < 70 & (valorx *-1 < 30)) {
+                if ((valorx < 70 & (valorx *-1 < 30)) &(valory < 70 & (valory *-1 < 30))) {
                     estado = true;
                     break;
                 }
@@ -110,6 +191,34 @@ public class VistaPrincipal extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_panel1MousePressed
+
+    private void label1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label1MousePressed
+           JOptionPane.showMessageDialog(null,"Espacio prohibido");
+    }//GEN-LAST:event_label1MousePressed
+
+    private void label3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label3MousePressed
+           JOptionPane.showMessageDialog(null,"Espacio prohibido");
+    }//GEN-LAST:event_label3MousePressed
+
+    private void label2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label2MousePressed
+           JOptionPane.showMessageDialog(null,"Espacio prohibido");
+    }//GEN-LAST:event_label2MousePressed
+
+    private void label4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label4MousePressed
+           JOptionPane.showMessageDialog(null,"Espacio prohibido");
+    }//GEN-LAST:event_label4MousePressed
+
+    private void label5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label5MousePressed
+           JOptionPane.showMessageDialog(null,"Espacio prohibido");
+    }//GEN-LAST:event_label5MousePressed
+
+    private void jLabel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MousePressed
+           JOptionPane.showMessageDialog(null,"Espacio prohibido");
+    }//GEN-LAST:event_jLabel2MousePressed
+
+    private void jLabel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MousePressed
+           JOptionPane.showMessageDialog(null,"Espacio prohibido");
+    }//GEN-LAST:event_jLabel3MousePressed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -145,6 +254,13 @@ public class VistaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel label1;
+    private javax.swing.JLabel label2;
+    private javax.swing.JLabel label3;
+    private javax.swing.JLabel label4;
+    private javax.swing.JLabel label5;
     private javax.swing.JPanel panel1;
     // End of variables declaration//GEN-END:variables
 }
