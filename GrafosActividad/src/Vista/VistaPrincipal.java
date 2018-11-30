@@ -1,10 +1,9 @@
 package Vista;
 
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.MouseInfo;
-import java.awt.Point;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -15,30 +14,87 @@ import javax.swing.JOptionPane;
 public class VistaPrincipal extends javax.swing.JFrame {
 
     ArrayList<JButton> botones = new ArrayList<>();
-    Point location;
+   
 
     public VistaPrincipal() {
         initComponents();      
         setSize(886, 650);
         setLocationRelativeTo(null);
-        setResizable(false);
-        location = this.getLocation();
+        setResizable(false);     
     }
+    
+    
+   
 
-    private void agregarBoton(double x, double y) {
+    private  void agregarBoton(double x, double y) {   
         
-        String name = JOptionPane.showInputDialog("Digite el nombre de la ubicación");
+      String nombre="";
+      int prioridad=0;
+      boolean estado = false;
+      
+        while(estado==false){  
+           try{
+          nombre = JOptionPane.showInputDialog(null,"Digite el nombre(UN CARACTER)"); 
+          int n = Integer.parseInt(nombre);
+          if(n<=0 | n>=0){
+              estado = false;
+          }         
+           }catch(NumberFormatException e){
+           
+              estado = true;
+           }
+        }
+          estado=false;
+          while(estado==false){  
+           try{
+          prioridad = Integer.parseInt(JOptionPane.showInputDialog(null,"Digite la prioridad")); 
+          String str = String.valueOf(prioridad); 
+          estado = true;
+           }catch(NumberFormatException w){
+           
+              estado = false;
+           }
+        }
+        
+        
+        
         JButton boton = new JButton();
-        boton.setName(name);
-        boton.setText(name);
-        x = x - 294.5;
-        y = y - 194;
-        boton.setBounds((int) x, (int) y, 40, 40);
+        boton.setName(String.valueOf(nombre.charAt(0)));
+        boton.setText(String.valueOf(nombre.charAt(0)));        
+        // El -20 es para centrar en X y Y
+        boton.setBounds((int) x-20, (int) y-20, 40, 40);
+        boton.setBackground(Color.white);
+        
         botones.add(boton);
         panel1.add(boton);
         panel1.updateUI();
     }
 
+    
+    private void crearUbiacion(int x, int y){
+        
+        boolean estado = false;  
+        if (botones.isEmpty()) {
+            agregarBoton(x,y);
+        } else {
+            
+            for (JButton boton : botones) {
+                int valorx = (x-boton.getX());
+                int valory = (y-boton.getY()); 
+  
+                if ((valorx < 70 & (valorx *-1 < 30)) &(valory < 70 & (valory *-1 < 30))) {
+                    estado = true;
+                    break;
+                }
+            }
+            if (estado == true) {
+                JOptionPane.showMessageDialog(null, "Ubicación muy cercana, reposicione");
+            } else {
+                agregarBoton(x,y);
+            }
+        }
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -179,33 +235,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void panel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel1MousePressed
-                  
-        boolean estado = false;
-        Point punto = MouseInfo.getPointerInfo().getLocation();
-        //Equilibrador en X ES 272 y en Y 172 tamaño del panel 720X560
-        int x =(int)punto.getX()-272;       
-        int y=(int)punto.getY()-172;
-        if (botones.isEmpty()) {
-            agregarBoton(punto.getX(), punto.getY());
-        } else {
-            
-            for (JButton boton : botones) {
-                int valorx = (x-boton.getX());
-                int valory = (y-boton.getY()); 
-  
-                if ((valorx < 70 & (valorx *-1 < 30)) &(valory < 70 & (valory *-1 < 30))) {
-                    estado = true;
-                    break;
-                }
-            }
-            if (estado == true) {
-                JOptionPane.showMessageDialog(null, "Ubicación muy cercana, reposicione");
-            } else {
-                agregarBoton(punto.getX(), punto.getY());
-            }
-
-        }
-
+           crearUbiacion(evt.getX(),evt.getY());
     }//GEN-LAST:event_panel1MousePressed
 
     private void label1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label1MousePressed
@@ -237,9 +267,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel3MousePressed
 
     private void formComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentMoved
-           if(this.getLocation()!=location){               
-               this.setLocation(location);
-           }
+        
     }//GEN-LAST:event_formComponentMoved
 
     private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
