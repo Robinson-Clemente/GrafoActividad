@@ -9,6 +9,16 @@ public class Ubicacion {
     private double cooy;
     private int  prioridad;    
     private int indice;
+    
+    public Ubicacion(String nombre, double coox, double cooy, int prioridad, int indice){
+    
+        this.nombre = nombre;
+        this.coox = coox;
+        this.cooy = cooy;
+        this.indice = indice;
+    
+    }
+    
 
     public String getNombre() {
         return nombre;

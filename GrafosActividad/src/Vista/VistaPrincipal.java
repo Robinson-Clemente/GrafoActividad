@@ -1,9 +1,15 @@
 package Vista;
 
 
+import Controlador.ControlLogico;
+import Controlador.ControlUbicacion;
+import Modelo.Ubicacion;
+import Modelo.Enlace;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -14,6 +20,10 @@ import javax.swing.JOptionPane;
 public class VistaPrincipal extends javax.swing.JFrame {
 
     ArrayList<JButton> botones = new ArrayList<>();
+    ControlUbicacion controlub = ControlUbicacion.getInstancia();
+    ControlLogico contrologic = ControlLogico.getInstancia();
+    Ubicacion uno = null;
+    Ubicacion dos = null;
    
 
     public VistaPrincipal() {
@@ -24,8 +34,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }
     
     
-   
-
     private  void agregarBoton(double x, double y) {   
         
       String nombre="";
@@ -55,17 +63,37 @@ public class VistaPrincipal extends javax.swing.JFrame {
               estado = false;
            }
         }
-        
-        
-        
-        JButton boton = new JButton();
+               
+        //Creamos Boton
+        JButton boton = new JButton();       
         boton.setName(String.valueOf(nombre.charAt(0)));
         boton.setText(String.valueOf(nombre.charAt(0)));        
         // El -20 es para centrar en X y Y
         boton.setBounds((int) x-20, (int) y-20, 40, 40);
         boton.setBackground(Color.white);
-        
         botones.add(boton);
+        
+        // Creamos un action listener a el boton
+        boton.addActionListener(new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+              
+              String nombre = boton.getName();
+              int indice=0;
+              for (int i = 0; i < botones.size(); i++) {
+                 if(nombre.equals(botones.get(i).getName())){
+                     indice = i;
+                     break;
+                 } 
+              }
+              crearEnlance(controlub.getListaub().get(indice));          
+          }
+      });
+    
+        // Creamos la Ubicacion
+        Ubicacion temp = new Ubicacion(nombre, x, y, prioridad,botones.size()-1);
+        controlub.agregar(temp);
+        contrologic.agregarFila_Columna();
         panel1.add(boton);
         panel1.updateUI();
     }
@@ -94,6 +122,72 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
         }
     }
+    
+    
+    private void crearEnlance(Ubicacion element){
+    
+        // Como me dijo profe!!
+        
+        if(uno == null){            
+           uno = element;
+        }else if(uno!=null & dos==null){
+           dos = element;
+        }else if(uno!=null & dos!=null){
+        
+            // Realizamos el enlace
+            
+            //Calculamos la ditancia usando la formula del modulo de un vector
+            // o distancia entre 2 puntos en el plano X,Y
+            
+            double distancia=0;
+            double tiempoPare=0;
+            double velocidadMax=0;
+            double x = dos.getCoox() - uno.getCooy();
+            double y = dos.getCooy() - uno.getCooy();
+            x = Math.pow(x, 2);
+            y = Math.pow(y, 2);
+            distancia = x + y;
+            Math.sqrt(distancia);
+
+            boolean status = false;
+            while(status == false) {
+                try {
+                    tiempoPare = Integer.parseInt(JOptionPane.showInputDialog(null,
+                            "Digite  tiempo de PARE"));
+                    
+                    velocidadMax = Integer.parseInt(JOptionPane.showInputDialog(null,
+                            "Digite velocidad Máxima"));
+                    
+                    String str = String.valueOf(tiempoPare);
+                    status = true;
+                } catch (NumberFormatException w) {
+                    status = false;
+                }
+            }
+            
+            Enlace temp = new Enlace(distancia,velocidadMax,tiempoPare,true);
+             JOptionPane.showMessageDialog(null,"Se enlanzará"+dos.getNombre()+" a"+
+                    uno.getNombre());
+            String respuesta = JOptionPane.showInputDialog("¿desea un doble enlance?"+uno.getNombre()+"<---->"+dos.getNombre()
+                    +"\n S/N");
+            // SEGUIR AQUI!!
+            if(respuesta.equalsIgnoreCase("S")){
+            
+                
+            }else if(respuesta.equalsIgnoreCase("N")){
+            
+            
+            
+            }
+        }
+    
+          uno = null;
+          dos = null;
+    }
+    
+    
+    
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
