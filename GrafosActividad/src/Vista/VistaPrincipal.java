@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 
 
 
+
 public class VistaPrincipal extends javax.swing.JFrame {
 
     private static ArrayList<JButton> botones = new ArrayList<>();
@@ -30,9 +31,16 @@ public class VistaPrincipal extends javax.swing.JFrame {
         initComponents();      
         setSize(886, 650);
         setLocationRelativeTo(null);
-        setResizable(false);     
+        setResizable(false);
+        iniciarGrupo();
     }
     
+    
+    private void iniciarGrupo(){
+        radioUno.setSelected(true);
+        grupoboton.add(radioUno);
+        grupoboton.add(radioDos);
+    }
     
     public static int getSizeBotones(){
          int size = botones.size();
@@ -77,6 +85,20 @@ public class VistaPrincipal extends javax.swing.JFrame {
         // El -20 es para centrar en X y Y
         boton.setBounds((int) x-20, (int) y-20, 40, 40);
         boton.setBackground(Color.white);
+        
+        estado = false;
+        for(JButton b : botones){
+            if(boton.getName().equals(b.getName())){
+                estado = true;
+                break;
+            }
+            
+        }
+        
+        if(estado){
+             JOptionPane.showMessageDialog(null,"Ubicacion existente",null,2);
+        }else{
+            
         botones.add(boton);
         
         // Creamos la Ubicacion
@@ -96,22 +118,25 @@ public class VistaPrincipal extends javax.swing.JFrame {
                  if(nombre.equals(botones.get(i).getName())){
                      indice = i;
                      break;
-                 }
-                 
+                 }                 
               }
-            
-              crearEnlance(controlub.getListaub().get(indice)); 
+              if(radioUno.isSelected()){
+                  crearEnlance(controlub.getListaub().get(indice)); 
+              }else if(radioDos.isSelected()){
+                  // CODIGO DE RECORRIDO
+                  
+              }
+              
                
           }
       });
     
-        
-       
         panel1.updateUI();
+        }
     }
 
     
-    private void crearUbiacion(int x, int y){
+    private void crearUbicacion(int x, int y){
         
         boolean estado = false;  
         if (botones.isEmpty()) {
@@ -144,8 +169,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
            uno = element;
         }else if(uno!=null & dos==null){            
            dos = element;
-           
-            // nullpointer aqui
+          
          if(contrologic.getMatriz()[uno.getIndice()][dos.getIndice()].getDistancia()!=-1){
          
              JOptionPane.showMessageDialog(null,"El enlace ya existe",null,2);
@@ -160,6 +184,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
             double distancia=0;
             double tiempoPare=0;
             double velocidadMax=0;
+            double tiempo=0;
             double x = dos.getCoox() - uno.getCooy();
             double y = dos.getCooy() - uno.getCooy();
             x = Math.pow(x, 2);
@@ -182,8 +207,10 @@ public class VistaPrincipal extends javax.swing.JFrame {
                     status = false;
                 }
             }
+            // Formula de movimiento uniforme rectilineo
             
-            Enlace temp = new Enlace(distancia,velocidadMax,tiempoPare,true);
+            tiempo = distancia/velocidadMax;
+            Enlace temp = new Enlace(distancia,velocidadMax,tiempoPare,true,tiempo+tiempoPare);
              JOptionPane.showMessageDialog(null,"Se enlanzará (Origen:)"+dos.getNombre()+" a"+
                     "(Destino:) "+uno.getNombre());
             String respuesta = JOptionPane.showInputDialog("¿desea un doble enlance?\n"+uno.getNombre()+"<---->"+dos.getNombre()
@@ -196,7 +223,6 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }else if(respuesta.equalsIgnoreCase("N")){
             
                contrologic.agregarEnlace(temp, uno.getIndice(), dos.getIndice());
-               
                
             }
             uno= null;
@@ -213,6 +239,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        grupoboton = new javax.swing.ButtonGroup();
         panel1 = new javax.swing.JPanel(){
 
             public void paintComponent(Graphics g){
@@ -231,6 +258,9 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        radioUno = new javax.swing.JRadioButton();
+        radioDos = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -345,11 +375,39 @@ public class VistaPrincipal extends javax.swing.JFrame {
         jLabel1.setText("CÁLCULO DE RUTAS - Sancochito");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 450, -1));
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        radioUno.setText("MODO ENLACE");
+
+        radioDos.setText("MODO RECORRIDO");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(radioUno)
+                    .addComponent(radioDos))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(radioUno)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addComponent(radioDos)
+                .addContainerGap())
+        );
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 90, 130, 80));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void panel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel1MousePressed
-           crearUbiacion(evt.getX(),evt.getY());
+          crearUbicacion(evt.getX(),evt.getY());          
     }//GEN-LAST:event_panel1MousePressed
 
     private void label1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label1MousePressed
@@ -426,14 +484,18 @@ public class VistaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup grupoboton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel label1;
     private javax.swing.JLabel label2;
     private javax.swing.JLabel label3;
     private javax.swing.JLabel label4;
     private javax.swing.JLabel label5;
     private javax.swing.JPanel panel1;
+    private javax.swing.JRadioButton radioDos;
+    private javax.swing.JRadioButton radioUno;
     // End of variables declaration//GEN-END:variables
 }

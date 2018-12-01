@@ -71,4 +71,13 @@ public class ControlLogico {
         this.matriz = matriz;
     }
 
+    private void recorridos(){
+    
+    
+    
+    }
+    
+    
+    
+    
 }
