@@ -19,11 +19,11 @@ import javax.swing.JOptionPane;
 
 public class VistaPrincipal extends javax.swing.JFrame {
 
-    ArrayList<JButton> botones = new ArrayList<>();
-    ControlUbicacion controlub = ControlUbicacion.getInstancia();
-    ControlLogico contrologic = ControlLogico.getInstancia();
-    Ubicacion uno = null;
-    Ubicacion dos = null;
+    private static ArrayList<JButton> botones = new ArrayList<>();
+    private ControlUbicacion controlub = ControlUbicacion.getInstancia();
+    private ControlLogico contrologic = ControlLogico.getInstancia();
+    private Ubicacion uno = null;
+    private Ubicacion dos = null;
    
 
     public VistaPrincipal() {
@@ -33,6 +33,12 @@ public class VistaPrincipal extends javax.swing.JFrame {
         setResizable(false);     
     }
     
+    
+    public static int getSizeBotones(){
+         int size = botones.size();
+
+        return size;
+    }
     
     private  void agregarBoton(double x, double y) {   
         
@@ -73,6 +79,12 @@ public class VistaPrincipal extends javax.swing.JFrame {
         boton.setBackground(Color.white);
         botones.add(boton);
         
+        // Creamos la Ubicacion
+        Ubicacion temp = new Ubicacion(nombre, x, y, prioridad,botones.size()-1);
+        controlub.agregar(temp);        
+        contrologic.agregarFila_Columna();       
+        panel1.add(boton);
+        
         // Creamos un action listener a el boton
         boton.addActionListener(new ActionListener() {
           @Override
@@ -84,17 +96,17 @@ public class VistaPrincipal extends javax.swing.JFrame {
                  if(nombre.equals(botones.get(i).getName())){
                      indice = i;
                      break;
-                 } 
+                 }
+                 
               }
-              crearEnlance(controlub.getListaub().get(indice));          
+            
+              crearEnlance(controlub.getListaub().get(indice)); 
+               
           }
       });
     
-        // Creamos la Ubicacion
-        Ubicacion temp = new Ubicacion(nombre, x, y, prioridad,botones.size()-1);
-        controlub.agregar(temp);
-        contrologic.agregarFila_Columna();
-        panel1.add(boton);
+        
+       
         panel1.updateUI();
     }
 
@@ -127,13 +139,17 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private void crearEnlance(Ubicacion element){
     
         // Como me dijo profe!!
-        
+        System.out.println(contrologic.getMatriz().length);
         if(uno == null){            
            uno = element;
-        }else if(uno!=null & dos==null){
+        }else if(uno!=null & dos==null){            
            dos = element;
-        }else if(uno!=null & dos!=null){
-        
+           
+            // nullpointer aqui
+         if(contrologic.getMatriz()[uno.getIndice()][dos.getIndice()].getDistancia()!=-1){
+         
+             JOptionPane.showMessageDialog(null,"El enlace ya existe",null,2);
+         }else{
             // Realizamos el enlace
             
             //Calculamos la ditancia usando la formula del modulo de un vector
@@ -166,23 +182,25 @@ public class VistaPrincipal extends javax.swing.JFrame {
             }
             
             Enlace temp = new Enlace(distancia,velocidadMax,tiempoPare,true);
-             JOptionPane.showMessageDialog(null,"Se enlanzará"+dos.getNombre()+" a"+
-                    uno.getNombre());
-            String respuesta = JOptionPane.showInputDialog("¿desea un doble enlance?"+uno.getNombre()+"<---->"+dos.getNombre()
+             JOptionPane.showMessageDialog(null,"Se enlanzará (Origen:)"+dos.getNombre()+" a"+
+                    "(Destino:) "+uno.getNombre());
+            String respuesta = JOptionPane.showInputDialog("¿desea un doble enlance?\n"+uno.getNombre()+"<---->"+dos.getNombre()
                     +"\n S/N");
             // SEGUIR AQUI!!
             if(respuesta.equalsIgnoreCase("S")){
             
-                
+                contrologic.agregarDobleEnlace(temp, uno.getIndice(), dos.getIndice());
+               
             }else if(respuesta.equalsIgnoreCase("N")){
             
-            
-            
+               contrologic.agregarEnlace(temp, uno.getIndice(), dos.getIndice());
+               
+               
             }
+            uno= null;
+            dos= null;
         }
-    
-          uno = null;
-          dos = null;
+        }     
     }
     
     

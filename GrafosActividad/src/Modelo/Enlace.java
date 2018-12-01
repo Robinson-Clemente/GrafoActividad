@@ -52,7 +52,7 @@ public class Enlace {
         this.tiempoPare = tiempoPare;
     }
 
-    public boolean isEstado() {
+    public boolean getEstado() {
         return estado;
     }
 
