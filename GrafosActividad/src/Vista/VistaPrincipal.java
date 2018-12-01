@@ -139,7 +139,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
     private void crearEnlance(Ubicacion element){
     
         // Como me dijo profe!!
-        System.out.println(contrologic.getMatriz().length);
+        
         if(uno == null){            
            uno = element;
         }else if(uno!=null & dos==null){            
@@ -149,6 +149,8 @@ public class VistaPrincipal extends javax.swing.JFrame {
          if(contrologic.getMatriz()[uno.getIndice()][dos.getIndice()].getDistancia()!=-1){
          
              JOptionPane.showMessageDialog(null,"El enlace ya existe",null,2);
+              uno= null;
+              dos= null;
          }else{
             // Realizamos el enlace
             
@@ -200,7 +202,7 @@ public class VistaPrincipal extends javax.swing.JFrame {
             uno= null;
             dos= null;
         }
-        }     
+        }      
     }
     
     
